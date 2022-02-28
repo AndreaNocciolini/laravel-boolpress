@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Model\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -37,7 +38,40 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+        
+        $data = $request->all();
+        $slug = Str::slug($data['title'], '-');
+
+        //Questo controllo serve a fare in modo che non esistano "slug" identici tra loro.
+        //Nel caso in cui $postSlugControl non sia null (la ricerca qua sotto cerca il primo risultato con quello "slug"), si entra nel While.
+
+        $postSlugControl = Post::where('slug', $slug)->first();
+
+        //Partendo da zero, se trova un altro "slug" identico a quello che sta creando, aggiungerà un numero in base al counter.
+        //Quindi, nel caso ne avessimo due uguali, lo "slug" dell'elemento che stiamo creando sarà qualcosa del tipo "slugesempio-1", se ne avessimo 50 uguali sarà "slugesempio-50"(quelli prima partiranno da slugesempio fino a slugesempio49).
+        $counter = 0;
+        while ($postSlugControl) {
+            $slug = $slug . '-' . $counter;
+            $postSlugControl = Post::where('slug', $slug)->first();
+            $counter++;
+        }
+
+        $post = new Post();
+        $post->title = $data['title'];
+        $post->content = $data['content'];
+        $post->slug = $slug;
+
+        $save = $post->save();
+
+        if (!$save) {
+            dd('Save failed...');
+        }
+
+        return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**
