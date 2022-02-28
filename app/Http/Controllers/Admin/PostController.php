@@ -93,7 +93,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', ['post'=>$post]);
     }
 
     /**
@@ -105,7 +105,22 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        $post->title = $data['title'];
+        $post->content = $data['content'];
+        $updated = $post->update();
+
+        if(!$updated) {
+            dd('Update failed...');
+        }
+
+        return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**
@@ -116,6 +131,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()
+            ->route('admin.posts.index');
+            // ->with('status', "The post '$post->title' was deleted!");
     }
 }

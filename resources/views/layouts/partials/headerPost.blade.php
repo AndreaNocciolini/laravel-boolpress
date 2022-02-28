@@ -1,6 +1,7 @@
 <header class="row p-4 bg-primary d-flex align-items-center justify-content-around">
     <div class="col-4 d-flex align-items-center justify-content-around">
         <h1>POSTS HEADER</h1>
+        <a href="{{ route('admin.posts.index') }}" class="btn btn-success">Posts</a>
         <a href="{{ route('admin.posts.create') }}" class="btn btn-info">Add New Post</a>
     </div>
     
