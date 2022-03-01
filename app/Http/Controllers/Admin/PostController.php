@@ -55,8 +55,8 @@ class PostController extends Controller
         //Quindi, nel caso ne avessimo due uguali, lo "slug" dell'elemento che stiamo creando sarà qualcosa del tipo "slugesempio-1", se ne avessimo 50 uguali sarà "slugesempio-50"(quelli prima partiranno da slugesempio fino a slugesempio49).
         $counter = 0;
         while ($postSlugControl) {
-            $slug = $slug . '-' . $counter;
-            $postSlugControl = Post::where('slug', $slug)->first();
+            $newSlug = $slug . '-' . $counter;
+            $postSlugControl = Post::where('slug', $newSlug)->first();
             $counter++;
         }
 
