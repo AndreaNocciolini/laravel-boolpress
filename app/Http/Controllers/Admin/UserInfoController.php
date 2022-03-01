@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use Illuminate\Support\Str;
 
 use App\Model\UserInfo;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class UserInfoController extends Controller
