@@ -139,7 +139,7 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()
-            ->route('admin.posts.index');
-        // ->with('status', "The post '$post->title' was deleted!");
+            ->route('admin.posts.index')
+            ->with('status', "The post '$post->title' was deleted!");
     }
 }
