@@ -42,7 +42,7 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
         ]);
-        
+
         $data = $request->all();
         $slug = Str::slug($data['title'], '-');
 
@@ -63,7 +63,12 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $data['title'];
         $post->content = $data['content'];
-        $post->slug = $slug;
+        if ($postSlugControl) {
+            $post->slug = $newSlug;
+        } else {
+            $post->slug = $slug;
+        }
+
 
         $save = $post->save();
 
@@ -93,7 +98,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', ['post'=>$post]);
+        return view('admin.posts.edit', ['post' => $post]);
     }
 
     /**
@@ -116,7 +121,7 @@ class PostController extends Controller
         $post->content = $data['content'];
         $updated = $post->update();
 
-        if(!$updated) {
+        if (!$updated) {
             dd('Update failed...');
         }
 
@@ -135,6 +140,6 @@ class PostController extends Controller
 
         return redirect()
             ->route('admin.posts.index');
-            // ->with('status', "The post '$post->title' was deleted!");
+        // ->with('status', "The post '$post->title' was deleted!");
     }
 }
