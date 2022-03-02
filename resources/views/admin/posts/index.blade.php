@@ -15,6 +15,7 @@
                     <div class="card text-center h-100">
                         <div class="card-body">
                             <h4 class="card-title text-center bg-info">{{ $post->category()->first()->name }}</h4>
+                            <h4 class="card-title text-center bg-info">By {{ $post->user()->first()->name }}</h4>
                             <h3 class="card-title">{{ $post->title }}</h3>
                             <p class="card-text">{{ $post->content }}</p>
                             <a class="btn btn-success" href="{{ route('admin.posts.show', $post) }}">Read Article</a>
