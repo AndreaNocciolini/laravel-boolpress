@@ -21,11 +21,15 @@
                 <div class="row w-100 h-100 justify-content-center align-items-center">
                     <div class="col d-flex">
                         <a href="{{ route('admin.posts.index') }}" class="btn btn-success">Posts</a>
+
+                        @if (Auth::user()->id === $post->user_id)
                         <form class="ms-2" action="{{ route('admin.posts.destroy', $post->id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <input class="btn btn-danger" type="submit" value="Delete Post">
                         </form>
+                        @endif
+
                     </div>    
                 </div>
             </div>
