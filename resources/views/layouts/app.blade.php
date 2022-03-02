@@ -72,9 +72,6 @@
                                     </form>
                                 </div>
                             </li>
-                            <li>
-                                <a class="text-decoration-none text-dark" href="{{ route('admin.posts.index') }}">Posts</a>
-                            </li>
                         @endguest
                     </ul>
                 </div>

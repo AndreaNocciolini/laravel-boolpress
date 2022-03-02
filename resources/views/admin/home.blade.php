@@ -19,5 +19,12 @@
             </div>
         </div>
     </div>
+    <div class="row p-4 d-flex align-items-center justify-content-around">
+        <div class="col-6 d-flex align-items-center justify-content-around">
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-success">Posts</a>
+            <a href="{{ route('admin.posts.create') }}" class="btn btn-warning">Add New Post</a>
+            <a href="{{ route('admin.home') }}" class="btn btn-info">{{ Auth::user()->name }}</a>
+        </div>
+    </div>
 </div>
 @endsection
