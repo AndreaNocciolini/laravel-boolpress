@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Model\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -98,7 +99,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
-    {
+    {   
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
         return view('admin.posts.edit', ['post' => $post]);
     }
 
@@ -117,6 +121,10 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
+
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
 
         $post->title = $data['title'];
         $post->content = $data['content'];
@@ -138,6 +146,10 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
+
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
 
         return redirect()
             ->route('admin.posts.index')
