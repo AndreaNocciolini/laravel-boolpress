@@ -8,7 +8,7 @@ use App\Model\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Model\Category;
 class PostController extends Controller
 {
     /**
@@ -19,9 +19,9 @@ class PostController extends Controller
     public function index()
     {
         // $posts = Post::paginate(16);
-        
+
         // Facciamo in modo che vengano visualizzati in pagina solo i posts dell'utente connesso
-        $posts = Post::where('user_id', Auth:: user()-> id)->paginate(16);
+        $posts = Post::where('user_id', Auth::user()->id)->paginate(16);
         return view('admin.posts.index', ['posts' => $posts]);
     }
 
@@ -31,8 +31,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.posts.create');
+    {   
+        $categories = Category::all();
+        return view('admin.posts.create', ['categories' => $categories]);
     }
 
     /**
@@ -46,6 +47,7 @@ class PostController extends Controller
         $validateData = $request->validate([
             'title' => 'required',
             'content' => 'required',
+            'category_id' => 'required|exists:App\Model\Category,id',
         ]);
 
         $data = $request->all();
@@ -68,6 +70,8 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $data['title'];
         $post->content = $data['content'];
+        $post->category_id = $data['category_id'];
+        $post->user_id = Auth::user()->id;
         if ($postSlugControl) {
             $post->slug = $newSlug;
         } else {
