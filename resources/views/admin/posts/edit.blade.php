@@ -40,7 +40,7 @@
 
                     <button type="submit" class="btn btn-primary">Save</button>
                     <button type="submit" class="btn btn-warning"><a class="text-decoration-none text-dark"
-                            href="{{ route('admin.posts.index') }}">Posts</a></button>
+                            href="{{ route('admin.posts.index') }}">Back</a></button>
                 </form>
             </div>
         </div>
