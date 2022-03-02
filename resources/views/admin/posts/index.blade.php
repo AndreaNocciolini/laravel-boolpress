@@ -14,20 +14,21 @@
                 <div class="col">
                     <div class="card text-center h-100">
                         <div class="card-body">
+                            <h4 class="card-title text-center bg-info">{{ $post->category()->first()->name }}</h4>
                             <h3 class="card-title">{{ $post->title }}</h3>
                             <p class="card-text">{{ $post->content }}</p>
                             <a class="btn btn-success" href="{{ route('admin.posts.show', $post) }}">Read Article</a>
-                            
+
                             {{-- Con questo controllo facciamo in modo che i pulsanti edit e delete siano visibili solo al proprietario del post --}}
-                            
+
                             @if (Auth::user()->id === $post->user_id)
-                            <a class="btn btn-warning" href="{{ route('admin.posts.edit', $post) }}">Edit Post</a>
-                            <form class="mt-1" action="{{ route('admin.posts.destroy', $post->id) }}"
-                                method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input class="btn btn-danger" type="submit" value="Delete Post">
-                            </form>
+                                <a class="btn btn-warning" href="{{ route('admin.posts.edit', $post) }}">Edit Post</a>
+                                <form class="mt-1" action="{{ route('admin.posts.destroy', $post->id) }}"
+                                    method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input class="btn btn-danger" type="submit" value="Delete Post">
+                                </form>
                             @endif
 
                         </div>

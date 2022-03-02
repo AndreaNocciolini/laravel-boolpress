@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Category;
+
 class PostController extends Controller
 {
     /**
@@ -31,7 +32,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $categories = Category::all();
         return view('admin.posts.create', ['categories' => $categories]);
     }
@@ -110,7 +111,8 @@ class PostController extends Controller
         if (Auth::user()->id != $post->user_id) {
             abort('403');
         }
-        return view('admin.posts.edit', ['post' => $post]);
+        $categories = Category::all();
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -125,6 +127,7 @@ class PostController extends Controller
         $validateData = $request->validate([
             'title' => 'required',
             'content' => 'required',
+            'category_id' => 'required|exists:App\Model\Category,id',
         ]);
 
         $data = $request->all();
@@ -155,6 +158,8 @@ class PostController extends Controller
                 $post->slug = $slug;
             }
         }
+        $post->category_id = $data['category_id'];
+        $post->user_id = Auth::user()->id;
 
         $updated = $post->update();
 
