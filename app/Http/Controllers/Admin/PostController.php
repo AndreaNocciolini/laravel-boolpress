@@ -99,7 +99,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
-    {   
+    {
         if (Auth::user()->id != $post->user_id) {
             abort('403');
         }
@@ -128,6 +128,27 @@ class PostController extends Controller
 
         $post->title = $data['title'];
         $post->content = $data['content'];
+
+        if ($post->title != $data['title']) {
+            $post->title = $data['title'];
+
+            $slug = Str::slug($data['title'], '-');
+            $postSlugControl = Post::where('slug', $slug)->first();
+
+            $counter = 0;
+            while ($postSlugControl) {
+                $newSlug = $slug . '-' . $counter;
+                $postSlugControl = Post::where('slug', $newSlug)->first();
+                $counter++;
+            }
+
+            if ($postSlugControl) {
+                $post->slug = $newSlug;
+            } else {
+                $post->slug = $slug;
+            }
+        }
+
         $updated = $post->update();
 
         if (!$updated) {
