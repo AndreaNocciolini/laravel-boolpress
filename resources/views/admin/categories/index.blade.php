@@ -15,7 +15,8 @@
                     <div class="card text-center h-100">
                         <div class="card-body  bg-{{($category->id % 2) ? 'success' : 'info'}}">
                             <p class="card-text text-center">{{ $category->name }}</p>
-                            <a class="btn btn-warning" href="{{ route('admin.categories.show', $category) }}">View More</a>
+                            <a class="btn btn-warning" href="{{ route('admin.categories.show', $category) }}">Show</a>
+                            <a class="btn btn-warning" href="{{ route('admin.categories.create', $category) }}">Add New Category</a>
                         </div>
                     </div>
                 </div>
