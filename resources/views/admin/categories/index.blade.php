@@ -9,6 +9,11 @@
                 </div>
             @endif
         </div>
+        <div class="row">
+            <div class="col text-center mt-3">
+                <a class="btn btn-primary" href="{{ route('admin.categories.create') }}">Add New Category</a>
+            </div>
+        </div>
         <div class="row row-cols-4 p-2 g-3">
             @foreach ($categories as $category)
                 <div class="col">
@@ -16,7 +21,7 @@
                         <div class="card-body  bg-{{($category->id % 2) ? 'success' : 'info'}}">
                             <p class="card-text text-center">{{ $category->name }}</p>
                             <a class="btn btn-warning" href="{{ route('admin.categories.show', $category) }}">Show</a>
-                            <a class="btn btn-warning" href="{{ route('admin.categories.create', $category) }}">Add New Category</a>
+                            <a class="btn btn-{{($category->id % 2) ? 'info' : 'success'}}" href="{{ route('admin.categories.edit', $category) }}">Edit</a>
                         </div>
                     </div>
                 </div>
