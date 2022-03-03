@@ -7,6 +7,7 @@ use App\Model\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Model\Post;
 
 class CategoryController extends Controller
 {
@@ -115,6 +116,14 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+        
+        $posts = Post::whereNull('category_id')->get();
+
+        foreach ($posts as $post) {
+            $randomCategories = Category::inRandomOrder()->first()->id;
+            $post->category_id = $randomCategories;
+            $post->update();
+        }
 
         return redirect()
             ->route('admin.categories.index')
