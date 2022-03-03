@@ -22,6 +22,12 @@
                             <p class="card-text text-center">{{ $category->name }}</p>
                             <a class="btn btn-warning" href="{{ route('admin.categories.show', $category) }}">Show</a>
                             <a class="btn btn-{{($category->id % 2) ? 'info' : 'success'}}" href="{{ route('admin.categories.edit', $category) }}">Edit</a>
+                            <form class="mt-1" action="{{ route('admin.categories.destroy', $category->id) }}"
+                                method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input class="btn btn-danger" type="submit" value="Delete Post">
+                            </form>
                         </div>
                     </div>
                 </div>

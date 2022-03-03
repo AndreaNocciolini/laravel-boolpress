@@ -111,4 +111,13 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.show', $category->id);
     }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+
+        return redirect()
+            ->route('admin.categories.index')
+            ->with('status', "The category '$category->name' was deleted!");
+    }
 }
