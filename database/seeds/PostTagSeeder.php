@@ -14,15 +14,13 @@ class PostTagSeeder extends Seeder
      */
     public function run()
     {   
-        //Metodo funzionale ma non perfetto, necessita di più controlli sugli accompiamenti di id, dato che possono uscire PrimaryKey Doppie.
+        
         $posts = Post::all();
         // $tags = Tag::all();
         foreach ($posts as $post) {
-            $randomNum = random_int(1, 4);
-            for ($i = 0; $i < $randomNum; $i++) {
-                $randomTag = Tag::inRandomOrder()->first()->id;
-                $post->tags()->attach($randomTag);
-            }
+            $randomNum = random_int(1,4);
+            $tags = Tag::inRandomOrder()->limit($randomNum)->get();
+            $post->tags()->attach($tags);
         }
     }
 }
