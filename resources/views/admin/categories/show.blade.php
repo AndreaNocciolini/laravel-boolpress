@@ -14,6 +14,7 @@
                             <h4 class="card-title text-center bg-info">By {{ $post->user()->first()->name }}</h4>
                             <h2 class="card-title">{{ $post->title }}</h2>
                             <p class="card-text">{{ $post->content }}</p>
+                            <a class="btn btn-success" href="{{ route('admin.posts.show', $post) }}">Read Article</a>
                         </div>
                         @endforeach
                         <div class="card-title">

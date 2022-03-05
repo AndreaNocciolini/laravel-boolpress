@@ -17,6 +17,9 @@
                             <h4 class="card-title text-center bg-info">{{ $post->category()->first()->name }}</h4>
                             <h4 class="card-title text-center bg-info">By {{ $post->user()->first()->name }}</h4>
                             <h3 class="card-title">{{ $post->title }}</h3>
+                            @foreach ($post->tags()->get() as $tag)
+                                <h5 class="card-title">{{ $tag->name }}</h5>
+                            @endforeach
                             <p class="card-text">{{ $post->content }}</p>
                             <a class="btn btn-success" href="{{ route('admin.posts.show', $post) }}">Read Article</a>
 

@@ -22,7 +22,7 @@ class PostController extends Controller
         // $posts = Post::paginate(16);
 
         // Facciamo in modo che vengano visualizzati in pagina solo i posts dell'utente connesso
-        $posts = Post::where('user_id', Auth::user()->id)->paginate(16);
+        $posts = Post::where('user_id', Auth::user()->id)->paginate(12);
         return view('admin.posts.index', ['posts' => $posts]);
     }
 
