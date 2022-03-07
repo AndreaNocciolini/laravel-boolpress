@@ -11,9 +11,12 @@
                                 class="img-fluid rounded-start" alt="...">
                         </div>
                         <div class="col-md-8">
-                            <div class="card-body">
-                                <h4 class="card-title text-center bg-info">{{ $post->category()->first()->name}}</h4>
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-center bg-info">{{ $post->category()->first()->name }}</h4>
                                 <h4 class="card-title text-center bg-info">By {{ $post->user()->first()->name }}</h4>
+                                @foreach ($post->tags()->get() as $tag)
+                                    <h5 class="card-title">{{ $tag->name }}</h5>
+                                @endforeach
                                 <h2 class="card-title">{{ $post->title }}</h2>
                                 <p class="card-text">{{ $post->content }}</p>
                             </div>
@@ -25,14 +28,15 @@
                         <a href="{{ route('admin.posts.index') }}" class="btn btn-success">My Posts</a>
 
                         @if (Auth::user()->id === $post->user_id)
-                        <form class="ms-2" action="{{ route('admin.posts.destroy', $post->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <input class="btn btn-danger" type="submit" value="Delete Post">
-                        </form>
+                            <form class="ms-2" action="{{ route('admin.posts.destroy', $post->id) }}"
+                                method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input class="btn btn-danger" type="submit" value="Delete Post">
+                            </form>
                         @endif
 
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
