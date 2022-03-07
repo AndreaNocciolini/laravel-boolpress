@@ -50,7 +50,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        dd($request->all());
         $validateData = $request->validate([
             'title' => 'required',
             'content' => 'required',
@@ -58,13 +59,13 @@ class PostController extends Controller
             'tags.*' => 'nullable|exists:App\Model\Tag,id',
             'image' => 'nullable|image',
         ]);
-
+        
         $data = $request->all();
         $slug = Str::slug($data['title'], '-');
 
         //Questo controllo serve a fare in modo che non esistano "slug" identici tra loro.
         //Nel caso in cui $postSlugControl non sia null (la ricerca qua sotto cerca il primo risultato con quello "slug"), si entra nel While.
-
+        
         $postSlugControl = Post::where('slug', $slug)->first();
 
         //Partendo da zero, se trova un altro "slug" identico a quello che sta creando, aggiungerà un numero in base al counter.
@@ -76,11 +77,15 @@ class PostController extends Controller
             $counter++;
         }
 
-        $img_path = Storage::put($data['image']);
+        if (!empty($data["image"])) {
+            $img_path = Storage::put("uploads", $data["image"]);
+            $data["image"] = $img_path;
+        }
 
         $post = new Post();
         $post->title = $data['title'];
         $post->content = $data['content'];
+        $post->image = $data['image'];
         $post->category_id = $data['category_id'];
         $post->user_id = Auth::user()->id;
         if ($postSlugControl) {
