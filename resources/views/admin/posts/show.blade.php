@@ -7,8 +7,8 @@
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4 d-flex align-items-center p-2">
-                            <img src="https://www.geometrian.it/wp-content/uploads/2016/12/image-placeholder-500x500.jpg"
-                                class="img-fluid rounded-start" alt="...">
+                            <img src="{{ asset('storage/' . $post->image) }}"
+                                class="img-fluid rounded-start" alt="{{ $post->title }}">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body text-center">

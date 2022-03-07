@@ -51,7 +51,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {   
-        dd($request->all());
         $validateData = $request->validate([
             'title' => 'required',
             'content' => 'required',
@@ -148,7 +147,8 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
             'category_id' => 'required|exists:App\Model\Category,id',
-            'tags.*' => 'nullable|exists:App\Model\Tag,id'
+            'tags.*' => 'nullable|exists:App\Model\Tag,id',
+            'image' => 'nullable|image',
         ]);
 
         $data = $request->all();
@@ -179,6 +179,13 @@ class PostController extends Controller
                 $post->slug = $slug;
             }
         }
+        
+        if (!empty($data["image"])) {
+            $img_path = Storage::put("uploads", $data["image"]);
+            $data["image"] = $img_path;
+        }
+
+        $post->image =  $data["image"];
         $post->category_id = $data['category_id'];
         $post->user_id = Auth::user()->id;
 
