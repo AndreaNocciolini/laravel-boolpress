@@ -20,6 +20,23 @@
                             <div class="alert alert-danger">This field is required.</div>
                         @enderror
                     </div>
+                    <fieldset class="mb-3">
+                        <label>Tags</label>
+                        @foreach ($tags as $tag)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                    {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{ $tag->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </fieldset>
+                    @error('tags.*')
+                        <div class="alert alert-danger mt-3">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">

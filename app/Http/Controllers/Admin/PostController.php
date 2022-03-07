@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Str;
-
-use App\Model\Post;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use App\Model\Post;
 use App\Model\Category;
+use App\Model\Tag;
+use App\Http\Controllers\Controller;
+
+
 
 class PostController extends Controller
 {
@@ -32,9 +35,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        $posts = Post::all();
         $categories = Category::all();
-        return view('admin.posts.create', ['categories' => $categories]);
+        $tags = Tag::all();
+        return view('admin.posts.create', ['categories' => $categories, 'tags' => $tags]);
     }
 
     /**
@@ -49,6 +54,7 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
             'category_id' => 'required|exists:App\Model\Category,id',
+            'tags.*' => 'nullable|exists:App\Model\Tag,id'
         ]);
 
         $data = $request->all();
@@ -86,6 +92,10 @@ class PostController extends Controller
             dd('Save failed...');
         }
 
+        if (!empty($data['tags'])) {
+            $post->tags()->attach($data['tags']);
+        }
+
         return redirect()->route('admin.posts.show', $post->id);
     }
 
@@ -112,7 +122,8 @@ class PostController extends Controller
             abort('403');
         }
         $categories = Category::all();
-        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
+        $tags = Tag::all();
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags'=> $tags]);
     }
 
     /**
@@ -128,6 +139,7 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
             'category_id' => 'required|exists:App\Model\Category,id',
+            'tags.*' => 'nullable|exists:App\Model\Tag,id'
         ]);
 
         $data = $request->all();
@@ -167,6 +179,12 @@ class PostController extends Controller
             dd('Update failed...');
         }
 
+        if (!empty($data['tags'])) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->detach();
+        }
+
         return redirect()->route('admin.posts.show', $post->id);
     }
 
@@ -178,11 +196,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
 
         if (Auth::user()->id != $post->user_id) {
             abort('403');
         }
+
+        $post->tags()->detach();
+        $post->delete();
 
         return redirect()
             ->route('admin.posts.index')
