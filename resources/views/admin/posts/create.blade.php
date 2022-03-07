@@ -4,7 +4,7 @@
     <main>
         <div class="container mt-3 mb-3">
             <div class="row mt-3">
-                <form action="{{ route('admin.posts.store') }}" method="post">
+                <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="mb-3">
@@ -54,6 +54,13 @@
                             <div class="alert alert-danger">This field is required.</div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input class="form-control" type="file" id="image" name="image">
+                        @error('image')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                      </div>
 
                     <button type="submit" class="btn btn-primary">Save</button>
                     <button type="submit" class="btn btn-warning"><a class="text-decoration-none text-dark"

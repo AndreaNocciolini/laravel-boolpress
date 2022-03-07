@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use App\Model\Post;
 use App\Model\Category;
@@ -54,7 +55,8 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
             'category_id' => 'required|exists:App\Model\Category,id',
-            'tags.*' => 'nullable|exists:App\Model\Tag,id'
+            'tags.*' => 'nullable|exists:App\Model\Tag,id',
+            'image' => 'nullable|image',
         ]);
 
         $data = $request->all();
@@ -73,6 +75,8 @@ class PostController extends Controller
             $postSlugControl = Post::where('slug', $newSlug)->first();
             $counter++;
         }
+
+        $img_path = Storage::put($data['image']);
 
         $post = new Post();
         $post->title = $data['title'];
