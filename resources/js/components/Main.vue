@@ -2,7 +2,7 @@
     <div class="row row-cols-4 g-3 p-3">
         <div class="col" v-for="(post, index) in posts" :key="index">
                 <div class="card h-100">
-                <img v-if="post.image" :src="post.image" class="card-img-top" :alt="post.title">
+                <img v-if="post.image" :src="'/storage/' + post.image" class="card-img-top" :alt="post.title">
                 <div class="card-body">
                     <h3 class="card-title">{{ post.title }}</h3>
                     <p class="card-text">{{ post.content }}</p>
@@ -38,7 +38,7 @@ export default {
              )
              .catch()
 
-    }
+    },
 }
 </script>
 
