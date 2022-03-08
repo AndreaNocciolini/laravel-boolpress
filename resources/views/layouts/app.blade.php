@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     @yield('script')
+    <script src="https://unpkg.com/axios/dist/axios.min.js" ></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
