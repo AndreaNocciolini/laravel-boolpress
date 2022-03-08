@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // return view('admin.home');
-    return view('guests.welcome');
-});
+// Route::get('/', function () {
+//     // return view('admin.home');
+//     return view('guests.welcome');
+// });
 
 Auth::routes();
 
@@ -31,3 +31,7 @@ Route::middleware('auth')
         Route::resource('categories', 'CategoryController');
         Route::resource('posts', 'PostController');
     });
+
+    Route::get('{any?}', function ($name = null) {
+        return view('guests.welcome');
+    })->where('any', '.*');
