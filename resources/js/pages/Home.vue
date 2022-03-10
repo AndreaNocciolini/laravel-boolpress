@@ -6,7 +6,7 @@
                   <h1>Home</h1>
               </div>
           </div>
-          <Main :cards='cards'></Main>
+          <Main :cards='cards' @changePage="changePage($event)"></Main>
       </div>
   </div>
 </template>
@@ -44,14 +44,14 @@ export default {
     },
     methods: {
         changePage(pageUrl) {
-            let url = this[pageUrl];
+            let url = this.cards[pageUrl];
 
             if (url) {
                 Axios.get(url)
                 .then((result) => {
-                    this.posts = result.data.result.data;
-                    this.prev_page = result.data.result.prev_page_url;
-                    this.next_page = result.data.result.next_page_url;
+                    this.cards.posts = result.data.result.data;
+                    this.cards.prev_page = result.data.result.prev_page_url;
+                    this.cards.next_page = result.data.result.next_page_url;
                     }
                 )
                 .catch()

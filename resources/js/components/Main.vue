@@ -19,11 +19,15 @@
 </template>
 
 <script>
-import Axios from 'axios';
 
 export default {
     name:"Main",
     props: ['cards'],
+    methods: {
+        changePage(pageUrl){
+            this.$emit('changePage', pageUrl)
+        }
+    }
 }
 </script>
 
