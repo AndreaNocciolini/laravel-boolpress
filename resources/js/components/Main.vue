@@ -7,15 +7,12 @@
                     <h3 class="card-title">{{ post.title }}</h3>
                     <p class="card-text">{{ post.content }}</p>
                 </div>
-                <!-- <ul class="list-group list-group-flush">
-                    <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div> -->
+            </div>
+        </div>
+        <div class="row w-100 justify-content-around mt-3 mb-1">
+            <div class="col-2 d-flex justify-content-around">
+                <button v-if="prev_page" class="btn btn-success" @click="changePage('prev_page')">Prev</button>
+                <button v-if="next_page" class="btn btn-success" @click="changePage('next_page')">Next</button>
             </div>
         </div>
     </div>
@@ -29,16 +26,39 @@ export default {
     data(){
         return {
             posts: [],
+            prev_page: null,
+            next_page: null,
+
         }
     },
     created() {
+        
         Axios.get('http://127.0.0.1:8000/api/posts')
-             .then((result) =>
-                this.posts = result.data.result.posts
+             .then((result) => {
+                    this.posts = result.data.result.data;
+                    this.prev_page = result.data.result.prev_page_url;
+                    this.next_page = result.data.result.next_page_url;
+                }
              )
              .catch()
 
     },
+    methods: {
+        changePage(pageUrl) {
+            let url = this[pageUrl];
+
+            if (url) {
+                Axios.get(url)
+                .then((result) => {
+                    this.posts = result.data.result.data;
+                    this.prev_page = result.data.result.prev_page_url;
+                    this.next_page = result.data.result.next_page_url;
+                    }
+                )
+                .catch()
+            }
+        }
+    }
 }
 </script>
 
