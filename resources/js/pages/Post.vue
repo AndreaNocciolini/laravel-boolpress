@@ -17,6 +17,7 @@ import Axios from 'axios';
 
 export default {
     name: 'Post',
+    props: ['id'],
     data(){
       return {
         post: null,
@@ -27,9 +28,6 @@ export default {
         Axios.get('http://127.0.0.1:8000/api/post/' + this.id)
              .then((result) => {
                     this.post = result.data.result.data;
-                    // this.cards.prev_page = result.data.result.prev_page_url;
-                    // this.cards.next_page = result.data.result.next_page_url;
-                    console.log(post)
                 }
              )
              .catch()
