@@ -20,7 +20,7 @@ export default {
     props: ['id'],
     data(){
       return {
-        post: null,
+        post: [],
       }
     },
     created() {
