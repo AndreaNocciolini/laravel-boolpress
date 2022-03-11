@@ -6,10 +6,11 @@
                 <div class="card-body">
                     <h3 class="card-title">{{ post.title }}</h3>
                     <p class="card-text">{{ post.content }}</p>
+                    <router-link class="nav-link" :to="{ name: 'post', params: { id: post.id } }">Details</router-link>
                 </div>
             </div>
         </div>
-        <div class="row w-100 justify-content-around mt-3 mb-1">
+        <div v-if="cards.prev_page || cards.next_page" class="row w-100 justify-content-around mt-3 mb-1">
             <div class="col-2 d-flex justify-content-around">
                 <button v-if="cards.prev_page" class="btn btn-success" @click="changePage('prev_page')">Prev</button>
                 <button v-if="cards.next_page" class="btn btn-success" @click="changePage('next_page')">Next</button>

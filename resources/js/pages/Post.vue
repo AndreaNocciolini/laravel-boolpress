@@ -1,12 +1,40 @@
 <template>
-  <div>
-      <h1>Post</h1>
+  <div class="row">
+    <div class="col">
+          <div class="card h-100">
+            <img v-if="post.image" :src="'/storage/' + post.image" class="card-img-top" :alt="post.title">
+          <div class="card-body">
+              <h3 class="card-title">{{ post.title }}</h3>
+              <p class="card-text">{{ post.content }}</p>
+          </div>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Axios from 'axios';
+
 export default {
     name: 'Post',
+    data(){
+      return {
+        post: null,
+      }
+    },
+    created() {
+        
+        Axios.get('http://127.0.0.1:8000/api/post/' + this.id)
+             .then((result) => {
+                    this.post = result.data.result.data;
+                    // this.cards.prev_page = result.data.result.prev_page_url;
+                    // this.cards.next_page = result.data.result.next_page_url;
+                    console.log(post)
+                }
+             )
+             .catch()
+
+    },
 }
 </script>
 

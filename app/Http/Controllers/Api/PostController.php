@@ -13,8 +13,31 @@ class PostController extends Controller
         $posts = Post::paginate(12);
 
         return response()->json([
-            'response'=>true,
-            'result'=>$posts,
+            'response' => true,
+            'result' => $posts,
+        ]);
+    }
+
+    public function randomPosts()
+    {
+        $posts = Post::inRandomOrder()->limit(12)->get();
+
+        return response()->json([
+            'response' => true,
+            'result' => $posts,
+        ]);
+    }
+
+    public function show($id)
+    {
+        $post = Post::find($id);
+
+        return response()->json([
+            'response' => true,
+            'count' => $post ? 1 : 0,
+            'result' =>  [
+                'data' => $post
+            ],
         ]);
     }
 }
