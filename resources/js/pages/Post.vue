@@ -25,7 +25,7 @@ export default {
     },
     created() {
         
-        Axios.get('http://127.0.0.1:8000/api/post/' + this.id)
+        Axios.get('http://127.0.0.1:8000/api/post/' + this.id, {headers: {'Authorization': 'Bearer S3m0l4es7k416gghi37pO0i7'}})
              .then((result) => {
                     this.post = result.data.result.data;
                 }

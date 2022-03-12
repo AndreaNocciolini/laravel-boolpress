@@ -45,7 +45,7 @@ export default {
     methods: {
         changePage(pageUrl) {
             let url = this.cards[pageUrl];
-
+            
             if (url) {
                 Axios.get(url)
                 .then((result) => {
