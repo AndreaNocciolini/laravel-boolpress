@@ -1,13 +1,15 @@
 <template>
-  <div class="row">
-    <div class="col">
-          <div class="card">
-            <img v-if="post.image" :src="'/storage/' + post.image" class="card-img-top" :alt="post.title">
-          <div class="card-body">
-              <h3 class="card-title">{{ post.title }}</h3>
-              <p class="card-text">{{ post.content }}</p>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+            <div class="card">
+              <img v-if="post.image" :src="'/storage/' + post.image" class="card-img-top" :alt="post.title">
+            <div class="card-body">
+                <h3 class="card-title">{{ post.title }}</h3>
+                <p class="card-text">{{ post.content }}</p>
+            </div>
           </div>
-        </div>
+      </div>
     </div>
   </div>
 </template>

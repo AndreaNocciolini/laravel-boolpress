@@ -1,13 +1,15 @@
 <template>
   <div>
       <div class="container-fluid">
-          <div class="row">
+          <div class="container">
+              <div class="row">
               <div class="col">
                   <h1>Home</h1>
               </div>
           </div>
           <Main :cards='cards' @changePage="changePage($event)"></Main>
       </div>
+          </div>
   </div>
 </template>
 

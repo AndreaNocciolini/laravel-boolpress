@@ -1,6 +1,5 @@
 <template>
-  <div>
-      <div class="container-fluid">
+      <div class="container">
           <div class="row">
               <div class="col">
                   <h1>Try Something</h1>
@@ -8,7 +7,6 @@
           </div>
           <Main :cards='cards' @changePage="changePage($event)"></Main>
       </div>
-  </div>
 </template>
 
 <script>

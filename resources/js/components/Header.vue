@@ -23,10 +23,6 @@ export default {
               route: 'posts'
           },
           {
-              label: 'Post',
-              route: 'post'
-          },
-          {
               label: 'Contacts',
               route: 'contacts'
           },
