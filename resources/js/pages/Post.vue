@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col">
-          <div class="card h-100">
+          <div class="card">
             <img v-if="post.image" :src="'/storage/' + post.image" class="card-img-top" :alt="post.title">
           <div class="card-body">
               <h3 class="card-title">{{ post.title }}</h3>
